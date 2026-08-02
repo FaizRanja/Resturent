@@ -39,45 +39,45 @@ const AdminNavbar = ({ onToggleMobileSidebar, isMobileSidebarOpen }) => {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between bg-white dark:bg-dark-card border-b border-gray-100 dark:border-dark-border px-4 sm:px-6 shadow-sm">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between bg-white dark:bg-dark-card border-b border-gray-100 dark:border-dark-border px-3 sm:px-6 shadow-sm gap-2 sm:gap-4">
       {/* Left side: Mobile Toggle & Global Search */}
-      <div className="flex items-center gap-4 flex-1 max-w-xl">
+      <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0 max-w-xl">
         <button
           onClick={onToggleMobileSidebar}
-          className="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white hover:bg-primary hover:text-white transition-colors"
+          className="lg:hidden flex-shrink-0 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white hover:bg-primary hover:text-white transition-colors"
           title="Toggle Navigation Drawer"
         >
-          {isMobileSidebarOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
+          {isMobileSidebarOpen ? <FaTimes size={16} /> : <FaBars size={16} />}
         </button>
 
-        <div className="relative flex-1">
-          <FaSearch className="absolute left-3.5 top-3 text-gray-400" size={14} />
+        <div className="relative flex-1 min-w-0">
+          <FaSearch className="absolute left-3 top-3 text-gray-400" size={13} />
           <input
             type="text"
-            placeholder="Search orders, customers, dishes..."
+            placeholder="Search orders..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl bg-gray-100 dark:bg-dark-paper pl-10 pr-4 py-2 text-xs text-dark dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full rounded-xl bg-gray-100 dark:bg-dark-paper pl-8 sm:pl-10 pr-3 py-2 text-xs text-dark dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary truncate"
           />
         </div>
       </div>
 
       {/* Right side: Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
         {/* Theme Switcher */}
         <button
           onClick={toggleTheme}
-          className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white hover:text-secondary transition-colors"
+          className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white hover:text-secondary transition-colors"
           title="Toggle Dark/Light Mode"
         >
-          {isDarkMode ? <FaSun className="text-secondary" size={16} /> : <FaMoon className="text-slate-700" size={16} />}
+          {isDarkMode ? <FaSun className="text-secondary" size={15} /> : <FaMoon className="text-slate-700" size={15} />}
         </button>
 
         {/* Notifications Bell */}
         <div className="relative">
           <button
             onClick={() => setIsNotifOpen(prev => !prev)}
-            className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white hover:text-primary transition-colors"
+            className="relative flex-shrink-0 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white hover:text-primary transition-colors"
             title="Notifications"
           >
             <FaBell size={16} />
