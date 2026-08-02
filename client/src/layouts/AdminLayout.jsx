@@ -23,7 +23,10 @@ const AdminLayout = () => {
           isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-64'
         }`}
       >
-        <AdminNavbar onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)} />
+        <AdminNavbar
+          onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
+          isMobileSidebarOpen={isMobileSidebarOpen}
+        />
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           <Outlet />

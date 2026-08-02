@@ -17,7 +17,7 @@ import { useAuth } from '../../context/AuthContext';
 import { INITIAL_NOTIFICATIONS } from '../../data/adminData';
 import { Link, useNavigate } from 'react-router-dom';
 
-const AdminNavbar = ({ onOpenMobileSidebar }) => {
+const AdminNavbar = ({ onToggleMobileSidebar, isMobileSidebarOpen }) => {
   const { isDarkMode, toggleTheme } = useTheme();
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
@@ -43,10 +43,11 @@ const AdminNavbar = ({ onOpenMobileSidebar }) => {
       {/* Left side: Mobile Toggle & Global Search */}
       <div className="flex items-center gap-4 flex-1 max-w-xl">
         <button
-          onClick={onOpenMobileSidebar}
-          className="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white"
+          onClick={onToggleMobileSidebar}
+          className="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-paper text-dark dark:text-white hover:bg-primary hover:text-white transition-colors"
+          title="Toggle Navigation Drawer"
         >
-          <FaBars size={18} />
+          {isMobileSidebarOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
         </button>
 
         <div className="relative flex-1">
