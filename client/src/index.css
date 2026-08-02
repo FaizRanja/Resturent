@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased selection:bg-primary selection:text-white overflow-x-hidden;
+  }
+
+  /* Custom 60 FPS smooth scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-100 dark:bg-dark-card;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/70 hover:bg-primary rounded-full transition-colors;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-white/70 dark:bg-dark-card/70 backdrop-blur-xl border border-white/20 dark:border-dark-border/40 shadow-2xl;
+  }
+  
+  .glass-nav {
+    @apply bg-white/80 dark:bg-dark/85 backdrop-blur-2xl border-b border-gray-200/50 dark:border-dark-border/50;
+  }
+
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-orange-400 to-secondary animate-gradient-flow bg-[length:200%_auto];
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-amber-400 to-secondary;
+  }
+
+  .glow-orange {
+    box-shadow: 0 0 35px rgba(255, 87, 34, 0.4);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 35px rgba(255, 193, 7, 0.4);
+  }
+}
+
+/* Keyframe Animations for Animated Gradient */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-flow {
+  animation: gradientFlow 5s ease infinite;
+}
+
+/* Swiper custom overrides */
+.swiper-pagination-bullet {
+  @apply bg-gray-400 dark:bg-gray-600 opacity-70 transition-all duration-300 !important;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-primary w-6 rounded-full opacity-100 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  @apply text-primary hover:text-primary-dark transition-colors bg-white/80 dark:bg-dark-card/80 p-6 rounded-full shadow-lg backdrop-blur-md after:!text-lg !important;
+}
