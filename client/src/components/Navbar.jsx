@@ -106,7 +106,7 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
 
           {/* Right Action Icons & Auth Profile Buttons */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Search Trigger */}
+            {/* Search Trigger - Always Visible */}
             <button
               onClick={onOpenSearch}
               className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-dark-card text-dark dark:text-white hover:bg-primary hover:text-white transition-colors"
@@ -115,10 +115,10 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
               <FaSearch size={14} />
             </button>
 
-            {/* Wishlist Link */}
+            {/* Wishlist Link - Desktop Only */}
             <Link
               to="/wishlist"
-              className="relative flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-dark-card text-dark dark:text-white hover:bg-primary hover:text-white transition-colors"
+              className="hidden xl:flex relative h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-dark-card text-dark dark:text-white hover:bg-primary hover:text-white transition-colors"
               title="Favorite Dishes"
             >
               <FaHeart size={14} />
@@ -129,7 +129,7 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
               )}
             </Link>
 
-            {/* Cart Trigger */}
+            {/* Cart Trigger - Always Visible */}
             <button
               onClick={toggleCart}
               className="relative flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/30 hover:bg-primary-dark transition-all transform hover:scale-105"
@@ -143,18 +143,18 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
               )}
             </button>
 
-            {/* Theme Toggle */}
+            {/* Theme Toggle - Desktop Only */}
             <button
               onClick={toggleTheme}
-              className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-dark-card text-dark dark:text-white hover:text-secondary transition-colors"
+              className="hidden xl:flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-dark-card text-dark dark:text-white hover:text-secondary transition-colors"
               title={isDarkMode ? 'Switch Light Mode' : 'Switch Dark Mode'}
             >
               {isDarkMode ? <FaSun size={15} className="text-secondary" /> : <FaMoon size={14} />}
             </button>
 
-            {/* User Profile Badge or Login */}
+            {/* User Profile Badge or Login - Desktop Only */}
             {user ? (
-              <div className="relative">
+              <div className="hidden xl:block relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center gap-2 rounded-full bg-gray-100 dark:bg-dark-card p-1 pr-3 text-xs font-bold text-dark dark:text-white hover:bg-gray-200 dark:hover:bg-dark-paper transition-all"
@@ -162,7 +162,7 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-bold text-xs uppercase">
                     {user.name.charAt(0)}
                   </div>
-                  <span className="hidden md:inline max-w-[100px] truncate">{user.name}</span>
+                  <span className="max-w-[100px] truncate">{user.name}</span>
                 </button>
 
                 {isUserMenuOpen && (
@@ -194,7 +194,7 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
                 )}
               </div>
             ) : (
-              <div className="hidden md:flex items-center gap-2">
+              <div className="hidden xl:flex items-center gap-2">
                 <Link
                   to="/login"
                   className="px-3.5 py-2 rounded-2xl text-xs font-bold text-dark dark:text-white hover:text-primary transition-colors whitespace-nowrap"
@@ -246,13 +246,28 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
                 </Link>
               ))}
 
+              {/* Saved Favorites in Drawer */}
               <Link
                 to="/wishlist"
                 className="px-4 py-3 rounded-2xl text-sm font-bold text-dark dark:text-white hover:bg-gray-100 dark:hover:bg-dark-card flex items-center justify-between"
               >
-                <span>Saved Favorites</span>
-                {wishlistCount > 0 && <span className="bg-primary text-white text-xs px-2 py-0.5 rounded-full">{wishlistCount}</span>}
+                <span className="flex items-center gap-2">
+                  <FaHeart className="text-primary" size={14} /> Saved Favorites
+                </span>
+                {wishlistCount > 0 && <span className="bg-primary text-white text-xs px-2 py-0.5 rounded-full font-bold">{wishlistCount}</span>}
               </Link>
+
+              {/* Dark Mode Toggle in Drawer */}
+              <button
+                onClick={toggleTheme}
+                className="px-4 py-3 rounded-2xl text-sm font-bold text-dark dark:text-white hover:bg-gray-100 dark:hover:bg-dark-card flex items-center justify-between transition-colors"
+              >
+                <span className="flex items-center gap-2">
+                  {isDarkMode ? <FaSun size={15} className="text-secondary" /> : <FaMoon size={15} />}
+                  {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+                </span>
+                <span className="text-xs text-gray-400 dark:text-gray-500 font-normal">Switch theme</span>
+              </button>
 
               <div className="pt-4 border-t border-gray-100 dark:border-dark-border flex flex-col gap-2">
                 {!user ? (
@@ -271,12 +286,22 @@ const Navbar = ({ onOpenSearch, onSelectDish }) => {
                     </Link>
                   </div>
                 ) : (
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center justify-center gap-2 rounded-2xl bg-rose-500 text-white py-3 text-xs font-bold"
-                  >
-                    <FaSignOutAlt /> Sign Out ({user.name})
-                  </button>
+                  <div className="space-y-2">
+                    {user.role === 'admin' && (
+                      <Link
+                        to="/admin/dashboard"
+                        className="w-full flex items-center justify-center gap-2 rounded-2xl bg-amber-500 text-white py-3 text-xs font-bold shadow-md"
+                      >
+                        <FaShieldAlt size={13} /> Executive Admin Dashboard
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center justify-center gap-2 rounded-2xl bg-rose-500 text-white py-3 text-xs font-bold shadow-md"
+                    >
+                      <FaSignOutAlt /> Sign Out ({user.name})
+                    </button>
+                  </div>
                 )}
 
                 <Link
